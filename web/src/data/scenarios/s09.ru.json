@@ -1,0 +1,44 @@
+{
+  "version": "s09",
+  "title": "Команды агентов",
+  "description": "Постоянные участники команды общаются через JSONL-ящики входящих",
+  "steps": [
+    {
+      "type": "user_message",
+      "content": "Собери full-stack приложение: фронтенд на React, backend на Python, плюс тесты",
+      "annotation": "Большая задача, где полезна командная работа"
+    },
+    {
+      "type": "tool_call",
+      "content": "spawn_teammate(\n  name: \"frontend-dev\",\n  role: \"React-специалист\"\n)\nspawn_teammate(\n  name: \"backend-dev\",\n  role: \"Python API-специалист\"\n)",
+      "toolName": "teammate_manager",
+      "annotation": "В отличие от сабагентов из s04, тиммейты не исчезают после одной подзадачи"
+    },
+    {
+      "type": "system_event",
+      "content": "[TeammateManager] Команда создана:\n  записан .team/config.json\n  frontend-dev [idle] - свой поток, свой цикл агента\n  backend-dev [idle] - свой поток, свой цикл агента",
+      "annotation": "Каждый участник крутит собственный while(tool_use)-цикл в отдельном потоке"
+    },
+    {
+      "type": "tool_call",
+      "content": "send_message(\n  to: \"backend-dev\",\n  content: \"Собери API пользователей: GET/POST /users\"\n)",
+      "toolName": "send_message",
+      "annotation": "Сообщение дописывается в .team/inbox/backend-dev.jsonl"
+    },
+    {
+      "type": "system_event",
+      "content": "[backend-dev] Проверка входящих... 1 новое сообщение\n  От: lead\n  Содержание: \"Собери API пользователей: GET/POST /users\"\n  (после чтения ящик очищен)",
+      "annotation": "Инбокс работает по схеме прочитать-и-очистить, чтобы сообщение не обработалось дважды"
+    },
+    {
+      "type": "system_event",
+      "content": "[backend-dev -> frontend-dev] Ответ через инбокс:\n  \"API готов: GET /users, POST /users, GET /users/:id\"\n  Записано в .team/inbox/frontend-dev.jsonl",
+      "annotation": "Тиммейты пишут друг другу через тот же JSONL-механизм"
+    },
+    {
+      "type": "assistant_text",
+      "content": "Команда общается через файловые ящики входящих. У каждого участника свой .jsonl-файл: append для отправки, drain для чтения.",
+      "annotation": "JSONL-инбоксы разделяют время отправителя и время получателя"
+    }
+  ]
+}

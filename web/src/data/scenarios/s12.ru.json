@@ -1,0 +1,51 @@
+{
+  "version": "s12",
+  "title": "Worktree + изоляция задач",
+  "description": "Общая доска задач и worktree-дорожки для чистого параллельного выполнения",
+  "steps": [
+    {
+      "type": "user_message",
+      "content": "Параллельно реализуй рефакторинг auth и обновления login UI",
+      "annotation": "Две активные задачи в одной рабочей папке начали бы конфликтовать"
+    },
+    {
+      "type": "tool_call",
+      "content": "task_create(subject: \"Рефакторинг auth\")\ntask_create(subject: \"Доработка login UI\")",
+      "toolName": "task_manager",
+      "annotation": "Общая доска остаётся источником истины для координации"
+    },
+    {
+      "type": "tool_call",
+      "content": "worktree_create(name: \"auth-refactor\", task_id: 1)\nworktree_create(name: \"ui-login\")\ntask_bind_worktree(task_id: 2, worktree: \"ui-login\")",
+      "toolName": "worktree_manager",
+      "annotation": "Выделение дорожки и привязка задачи независимы: задача 2 связывается после создания дорожки"
+    },
+    {
+      "type": "system_event",
+      "content": "worktree.create.before/after emitted\n.tasks/task_1.json -> { status: \"in_progress\", worktree: \"auth-refactor\" }\n.tasks/task_2.json -> { status: \"in_progress\", worktree: \"ui-login\" }\n.worktrees/index.json updated",
+      "annotation": "Состояние control-plane остаётся каноничным; внешние подписчики могут реагировать на события жизненного цикла"
+    },
+    {
+      "type": "tool_call",
+      "content": "worktree_run(name: \"auth-refactor\", command: \"pytest tests/auth -q\")\nworktree_run(name: \"ui-login\", command: \"npm test -- login\")",
+      "toolName": "worktree_run",
+      "annotation": "В учебном runtime команды направляются через cwd выбранной дорожки; инвариант — явный контекст выполнения"
+    },
+    {
+      "type": "tool_call",
+      "content": "worktree_keep(name: \"ui-login\")\nworktree_remove(name: \"auth-refactor\", complete_task: true)\nworktree_events(limit: 10)",
+      "toolName": "worktree_manager",
+      "annotation": "Закрытие — явный переход состояния через инструменты: можно смешивать keep/remove и смотреть события"
+    },
+    {
+      "type": "system_event",
+      "content": "worktree.keep emitted для ui-login\nworktree.remove.before/after emitted для auth-refactor\ntask.completed emitted для #1\n.worktrees/events.jsonl appended",
+      "annotation": "Переходы жизненного цикла становятся явными записями, а файлы задач/worktree остаются источником истины"
+    },
+    {
+      "type": "assistant_text",
+      "content": "Доска задач отвечает за координацию, worktree — за изоляцию. Параллельные дорожки остаются чистыми и проверяемыми.",
+      "annotation": "Координируем в одной доске, изолируем по дорожкам там, где нужно, и пишем события для аудита"
+    }
+  ]
+}

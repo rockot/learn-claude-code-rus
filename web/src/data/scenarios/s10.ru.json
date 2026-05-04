@@ -1,0 +1,38 @@
+{
+  "version": "s10",
+  "title": "Командные протоколы",
+  "description": "Протоколы запрос-ответ для корректной остановки и согласования плана",
+  "steps": [
+    {
+      "type": "user_message",
+      "content": "Работа завершена. Корректно останови команду.",
+      "annotation": "Нельзя просто убить потоки: нужна согласованная остановка"
+    },
+    {
+      "type": "tool_call",
+      "content": "shutdown_request(\n  teammate: \"backend-dev\",\n  request_id: \"req_abc123\"\n)",
+      "toolName": "shutdown_teammate",
+      "annotation": "request_id связывает запрос и ответ на него"
+    },
+    {
+      "type": "system_event",
+      "content": "[Shutdown FSM] req_abc123: pending\n  Lead -> backend-dev inbox:\n  { type: \"shutdown_request\", request_id: \"req_abc123\" }",
+      "annotation": "Конечный автомат отслеживает состояние: pending -> approved | rejected"
+    },
+    {
+      "type": "system_event",
+      "content": "[backend-dev] Получен запрос на остановку req_abc123\n  Текущая задача: нет (idle)\n  Решение: approve\n  -> lead inbox: { type: \"shutdown_response\", request_id: \"req_abc123\", approve: true }",
+      "annotation": "Участник сам решает, можно ли завершаться, исходя из своего состояния"
+    },
+    {
+      "type": "system_event",
+      "content": "[Shutdown FSM] req_abc123: approved\n  Поток backend-dev остановлен\n  Статус: idle -> shutdown",
+      "annotation": "Тот же pattern request_id подходит и для согласования плана"
+    },
+    {
+      "type": "assistant_text",
+      "content": "backend-dev завершился корректно. Такой же паттерн request_id + FSM работает для планов: участник отправляет план, ведущий одобряет или отклоняет ответом с тем же request_id.",
+      "annotation": "Один паттерн корреляции request_id, два применения: shutdown и plan approval"
+    }
+  ]
+}
