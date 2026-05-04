@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSteppedVisualization } from "@/hooks/useSteppedVisualization";
 import { StepControls } from "@/components/visualizations/shared/step-controls";
 import { useSvgPalette } from "@/hooks/useDarkMode";
+import { useTranslations } from "@/lib/i18n";
 
 // -- Tool definitions --
 
@@ -93,6 +94,7 @@ function getCardX(index: number): number {
 }
 
 export default function ToolDispatch({ title }: { title?: string }) {
+  const t = useTranslations("viz_details");
   const {
     currentStep,
     totalSteps,
@@ -372,8 +374,8 @@ export default function ToolDispatch({ title }: { title?: string }) {
         onReset={reset}
         isPlaying={isPlaying}
         onToggleAutoPlay={toggleAutoPlay}
-        stepTitle={stepInfo.title}
-        stepDescription={stepInfo.desc}
+        stepTitle={t(`s02_step${currentStep}_title`)}
+        stepDescription={t(`s02_step${currentStep}_desc`)}
       />
     </section>
   );

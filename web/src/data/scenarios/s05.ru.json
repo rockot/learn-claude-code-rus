@@ -1,0 +1,44 @@
+{
+  "version": "s05",
+  "title": "Скиллы",
+  "description": "Агент загружает внешние знания из файлов SKILL.md",
+  "steps": [
+    {
+      "type": "user_message",
+      "content": "Set up a new Next.js project with TypeScript",
+      "annotation": "Задача требует знаний о конкретном фреймворке"
+    },
+    {
+      "type": "system_event",
+      "content": "[SkillLoader] Scanning for SKILL.md files... Found: nextjs.SKILL.md",
+      "annotation": "SkillLoader находит подходящий файл скилла до запуска цикла"
+    },
+    {
+      "type": "system_event",
+      "content": "[Skill injected] nextjs.SKILL.md -> tool_result message appended",
+      "annotation": "Содержимое скилла вставляется как tool_result, не раздувая системный промпт"
+    },
+    {
+      "type": "assistant_text",
+      "content": "I have knowledge about Next.js setup. Let me create the project structure.",
+      "annotation": "Модель теперь обладает знаниями о фреймворке из файла скилла"
+    },
+    {
+      "type": "tool_call",
+      "content": "npx create-next-app@latest my-app --typescript --tailwind --eslint --app --src-dir",
+      "toolName": "bash",
+      "annotation": "Использует флаги из знаний, полученных через скилл"
+    },
+    {
+      "type": "tool_result",
+      "content": "Success! Created my-app at /workspace/my-app",
+      "toolName": "bash",
+      "annotation": "Проект создан с правильной конфигурацией"
+    },
+    {
+      "type": "assistant_text",
+      "content": "Next.js project created with TypeScript, Tailwind CSS, ESLint, App Router, and src/ directory.",
+      "annotation": "Скиллы вставляются через tool_result, а не системный промпт — контекст остаётся компактным"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSteppedVisualization } from "@/hooks/useSteppedVisualization";
 import { StepControls } from "@/components/visualizations/shared/step-controls";
 import { useDarkMode, useSvgPalette } from "@/hooks/useDarkMode";
+import { useTranslations } from "@/lib/i18n";
 
 interface StepInfo {
   title: string;
@@ -149,6 +150,7 @@ function getBlockEndFraction(block: WorkBlock, step: number): number {
 }
 
 export default function BackgroundTasks({ title }: { title?: string }) {
+  const t = useTranslations("viz_details");
   const {
     currentStep,
     totalSteps,
@@ -616,8 +618,8 @@ export default function BackgroundTasks({ title }: { title?: string }) {
         onReset={reset}
         isPlaying={isPlaying}
         onToggleAutoPlay={toggleAutoPlay}
-        stepTitle={stepInfo.title}
-        stepDescription={stepInfo.description}
+        stepTitle={t(`s08_step${currentStep}_title`)}
+        stepDescription={t(`s08_step${currentStep}_desc`)}
       />
     </section>
   );

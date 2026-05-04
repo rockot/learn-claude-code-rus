@@ -1,0 +1,56 @@
+{
+  "version": "s08",
+  "title": "Фоновые задачи",
+  "description": "Агент выполняет долгие задачи в фоновых потоках",
+  "steps": [
+    {
+      "type": "user_message",
+      "content": "Run the test suite and while it's running, fix the linting errors",
+      "annotation": "Две задачи, которые можно выполнять параллельно"
+    },
+    {
+      "type": "assistant_text",
+      "content": "I'll start the tests in the background and fix linting in parallel.",
+      "annotation": "Агент распознаёт возможность для параллельного выполнения"
+    },
+    {
+      "type": "tool_call",
+      "content": "pytest tests/ -v --timeout=300",
+      "toolName": "background_task",
+      "annotation": "BackgroundManager запускает поток для долгого тестового набора"
+    },
+    {
+      "type": "system_event",
+      "content": "[BackgroundManager] Thread spawned: task_001\nRunning: pytest tests/ -v --timeout=300\nStatus: in_progress",
+      "annotation": "Поток работает независимо — основной цикл продолжается"
+    },
+    {
+      "type": "tool_result",
+      "content": "Background task started: task_001",
+      "toolName": "background_task",
+      "annotation": "Управление немедленно возвращается агенту"
+    },
+    {
+      "type": "tool_call",
+      "content": "ruff check --fix .",
+      "toolName": "bash",
+      "annotation": "Агент исправляет линтинг, пока тесты идут в фоне"
+    },
+    {
+      "type": "tool_result",
+      "content": "Fixed 12 linting errors in 5 files",
+      "toolName": "bash",
+      "annotation": "Линтинг исправлен параллельно с тестами"
+    },
+    {
+      "type": "system_event",
+      "content": "[Notification] Background task_001 completed\nResult: 47 tests passed, 2 failed\nFailed: test_auth.py::test_token_expiry, test_api.py::test_rate_limit",
+      "annotation": "Фоновый поток уведомляет основной цикл через очередь уведомлений"
+    },
+    {
+      "type": "assistant_text",
+      "content": "Linting is fixed. Tests finished: 47 passed, 2 failed. I'll fix the failing tests now.",
+      "annotation": "Неблокирующее выполнение через потоки и очередь обеспечивает параллельную работу"
+    }
+  ]
+}

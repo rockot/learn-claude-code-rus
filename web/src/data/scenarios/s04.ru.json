@@ -1,0 +1,51 @@
+{
+  "version": "s04",
+  "title": "Субагенты",
+  "description": "Агент запускает субагента для изолированного выполнения подзадачи",
+  "steps": [
+    {
+      "type": "user_message",
+      "content": "Refactor the calculator: split into modules and add tests",
+      "annotation": "Сложная задача, подходящая для делегирования"
+    },
+    {
+      "type": "assistant_text",
+      "content": "I'll delegate the test writing to a subagent while I handle the refactoring.",
+      "annotation": "Агент решает разделить работу с помощью инструмента Task"
+    },
+    {
+      "type": "tool_call",
+      "content": "Write unit tests for calc.py covering all 4 operations and edge cases like division by zero",
+      "toolName": "task",
+      "annotation": "Task tool запускает субагента со своим изолированным контекстом"
+    },
+    {
+      "type": "system_event",
+      "content": "[Subagent spawned] Context: fresh messages[], same tools, scoped prompt",
+      "annotation": "Субагент получает чистый контекст — никакой путаницы с историей родителя"
+    },
+    {
+      "type": "tool_result",
+      "content": "Created test_calc.py with 8 test cases. All passing.",
+      "toolName": "task",
+      "annotation": "Субагент завершил работу и вернул резюме родителю"
+    },
+    {
+      "type": "tool_call",
+      "content": "calc.py -> calc/operations.py, calc/cli.py",
+      "toolName": "write_file",
+      "annotation": "Родитель продолжает свою задачу: рефакторинг"
+    },
+    {
+      "type": "tool_result",
+      "content": "Files written successfully",
+      "toolName": "write_file",
+      "annotation": "Модули разделены"
+    },
+    {
+      "type": "assistant_text",
+      "content": "Refactored into calc/operations.py and calc/cli.py. Tests were written by a subagent and are all passing.",
+      "annotation": "Изоляция контекста исключает путаницу между задачами"
+    }
+  ]
+}

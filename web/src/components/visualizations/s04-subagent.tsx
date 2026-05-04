@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useSteppedVisualization } from "@/hooks/useSteppedVisualization";
 import { StepControls } from "@/components/visualizations/shared/step-controls";
+import { useTranslations } from "@/lib/i18n";
 
 interface MessageBlock {
   id: string;
@@ -67,6 +68,7 @@ const STEPS = [
 ];
 
 export default function SubagentIsolation({ title }: { title?: string }) {
+  const t = useTranslations("viz_details");
   const {
     currentStep,
     totalSteps,
@@ -298,8 +300,8 @@ export default function SubagentIsolation({ title }: { title?: string }) {
             onReset={reset}
             isPlaying={isPlaying}
             onToggleAutoPlay={toggleAutoPlay}
-            stepTitle={STEPS[currentStep].title}
-            stepDescription={STEPS[currentStep].description}
+            stepTitle={t(`s04_step${currentStep}_title`)}
+            stepDescription={t(`s04_step${currentStep}_desc`)}
           />
         </div>
       </div>

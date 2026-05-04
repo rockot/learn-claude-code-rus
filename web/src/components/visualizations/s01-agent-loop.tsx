@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSteppedVisualization } from "@/hooks/useSteppedVisualization";
 import { StepControls } from "@/components/visualizations/shared/step-controls";
 import { useSvgPalette } from "@/hooks/useDarkMode";
+import { useTranslations } from "@/lib/i18n";
 
 // -- Flowchart node definitions --
 
@@ -136,6 +137,7 @@ function edgePath(fromId: string, toId: string): string {
 // -- Component --
 
 export default function AgentLoop({ title }: { title?: string }) {
+  const t = useTranslations("viz_details");
   const {
     currentStep,
     totalSteps,
@@ -157,8 +159,6 @@ export default function AgentLoop({ title }: { title?: string }) {
       if (msg) visibleMessages.push(msg);
     }
   }
-
-  const stepInfo = STEP_INFO[currentStep];
 
   return (
     <section className="min-h-[500px] space-y-4">
@@ -408,8 +408,8 @@ export default function AgentLoop({ title }: { title?: string }) {
         onReset={reset}
         isPlaying={isPlaying}
         onToggleAutoPlay={toggleAutoPlay}
-        stepTitle={stepInfo.title}
-        stepDescription={stepInfo.desc}
+        stepTitle={t(`s01_step${currentStep}_title`)}
+        stepDescription={t(`s01_step${currentStep}_desc`)}
       />
     </section>
   );

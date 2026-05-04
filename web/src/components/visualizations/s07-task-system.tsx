@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useSteppedVisualization } from "@/hooks/useSteppedVisualization";
 import { StepControls } from "@/components/visualizations/shared/step-controls";
 import { useDarkMode, useSvgPalette } from "@/hooks/useDarkMode";
+import { useTranslations } from "@/lib/i18n";
 
 type TaskStatus = "pending" | "in_progress" | "completed" | "blocked";
 
@@ -193,6 +194,7 @@ function buildCurvePath(
 }
 
 export default function TaskSystem({ title }: { title?: string }) {
+  const t = useTranslations("viz_details");
   const {
     currentStep,
     totalSteps,
@@ -486,8 +488,8 @@ export default function TaskSystem({ title }: { title?: string }) {
         onReset={reset}
         isPlaying={isPlaying}
         onToggleAutoPlay={toggleAutoPlay}
-        stepTitle={stepInfo.title}
-        stepDescription={stepInfo.description}
+        stepTitle={t(`s07_step${currentStep}_title`)}
+        stepDescription={t(`s07_step${currentStep}_desc`)}
       />
     </section>
   );

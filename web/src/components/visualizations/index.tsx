@@ -28,7 +28,7 @@ export function SessionVisualization({ version }: { version: string }) {
   if (!Component) return null;
   return (
     <div className="space-y-2">
-      {locale === "ru" && (
+      {locale === "ru" && t("labels_note") && (
         <p className="text-xs text-[var(--color-text-secondary)]">
           {t("labels_note")}
         </p>

@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useSteppedVisualization } from "@/hooks/useSteppedVisualization";
 import { StepControls } from "@/components/visualizations/shared/step-controls";
+import { useTranslations } from "@/lib/i18n";
 
 // -- Task definitions --
 
@@ -219,6 +220,7 @@ function NagGauge({ value, max, firing }: { value: number; max: number; firing: 
 // -- Main component --
 
 export default function TodoWrite({ title }: { title?: string }) {
+  const t = useTranslations("viz_details");
   const {
     currentStep,
     totalSteps,
@@ -232,7 +234,6 @@ export default function TodoWrite({ title }: { title?: string }) {
   const tasks = TASK_STATES[currentStep];
   const nagValue = NAG_TIMER_PER_STEP[currentStep];
   const nagFires = NAG_FIRES_PER_STEP[currentStep];
-  const stepInfo = STEP_INFO[currentStep];
 
   const pendingTasks = tasks.filter((t) => t.status === "pending");
   const inProgressTasks = tasks.filter((t) => t.status === "in_progress");
@@ -315,8 +316,8 @@ export default function TodoWrite({ title }: { title?: string }) {
         onReset={reset}
         isPlaying={isPlaying}
         onToggleAutoPlay={toggleAutoPlay}
-        stepTitle={stepInfo.title}
-        stepDescription={stepInfo.desc}
+        stepTitle={t(`s03_step${currentStep}_title`)}
+        stepDescription={t(`s03_step${currentStep}_desc`)}
       />
     </section>
   );

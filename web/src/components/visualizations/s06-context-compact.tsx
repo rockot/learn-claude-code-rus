@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSteppedVisualization } from "@/hooks/useSteppedVisualization";
 import { StepControls } from "@/components/visualizations/shared/step-controls";
+import { useTranslations } from "@/lib/i18n";
 
 type BlockType = "user" | "assistant" | "tool_result";
 
@@ -194,6 +195,7 @@ const STEPS = [
 ];
 
 export default function ContextCompact({ title }: { title?: string }) {
+  const t = useTranslations("viz_details");
   const {
     currentStep,
     totalSteps,
@@ -440,8 +442,8 @@ export default function ContextCompact({ title }: { title?: string }) {
             onReset={reset}
             isPlaying={isPlaying}
             onToggleAutoPlay={toggleAutoPlay}
-            stepTitle={STEPS[currentStep].title}
-            stepDescription={STEPS[currentStep].description}
+            stepTitle={t(`s06_step${currentStep}_title`)}
+            stepDescription={t(`s06_step${currentStep}_desc`)}
           />
         </div>
       </div>

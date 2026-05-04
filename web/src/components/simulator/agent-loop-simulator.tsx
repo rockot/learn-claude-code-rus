@@ -24,6 +24,14 @@ const scenarioModules: Record<string, () => Promise<{ default: Scenario }>> = {
 };
 
 const ruScenarioModules: Record<string, () => Promise<{ default: Scenario }>> = {
+  s01: () => import("@/data/scenarios/s01.ru.json") as Promise<{ default: Scenario }>,
+  s02: () => import("@/data/scenarios/s02.ru.json") as Promise<{ default: Scenario }>,
+  s03: () => import("@/data/scenarios/s03.ru.json") as Promise<{ default: Scenario }>,
+  s04: () => import("@/data/scenarios/s04.ru.json") as Promise<{ default: Scenario }>,
+  s05: () => import("@/data/scenarios/s05.ru.json") as Promise<{ default: Scenario }>,
+  s06: () => import("@/data/scenarios/s06.ru.json") as Promise<{ default: Scenario }>,
+  s07: () => import("@/data/scenarios/s07.ru.json") as Promise<{ default: Scenario }>,
+  s08: () => import("@/data/scenarios/s08.ru.json") as Promise<{ default: Scenario }>,
   s09: () => import("@/data/scenarios/s09.ru.json") as Promise<{ default: Scenario }>,
   s10: () => import("@/data/scenarios/s10.ru.json") as Promise<{ default: Scenario }>,
   s11: () => import("@/data/scenarios/s11.ru.json") as Promise<{ default: Scenario }>,
