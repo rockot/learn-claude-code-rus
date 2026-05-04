@@ -2,10 +2,7 @@
 
 # Learn Claude Code RUS — nano-агент в стиле Claude Code с русской адаптацией
 
-<img width="260" src="https://github.com/user-attachments/assets/fe8b852b-97da-4061-a467-9694906b5edf" /><br>
-
-WeChat: сканируйте QR на изображении выше,  
-или X: [shareAI-Lab](https://x.com/baicai003)  
+**Оригинальный учебный репозиторий:** [shareAI-lab/learn-claude-code](https://github.com/shareAI-lab/learn-claude-code). Здесь — форк с русским UI, материалами в `docs/rus/` и брендингом Learn Claude Code RUS.
 
 ```
                     ПАТТЕРН АГЕНТА

@@ -1,10 +1,7 @@
 [English](./README-en.md) | [Русский](./README.md) | [中文](./README-zh.md) | [日本語](./README-ja.md)  
 # Learn Claude Code -- A nano Claude Code-like agent, built from 0 to 1
-<img width="260" src="https://github.com/user-attachments/assets/fe8b852b-97da-4061-a467-9694906b5edf" /><br>
 
-Scan with Wechat to fellow us,  
-or fellow on X: [shareAI-Lab](https://x.com/baicai003)  
-
+**Upstream:** [shareAI-lab/learn-claude-code](https://github.com/shareAI-lab/learn-claude-code)
 
 ```
                     THE AGENT PATTERN
