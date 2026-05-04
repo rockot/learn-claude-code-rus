@@ -87,7 +87,7 @@ def agent_loop(messages):
 ## Быстрый старт
 
 ```sh
-git clone https://github.com/aralov/learn-claude-code-rus
+git clone https://github.com/rockot/learn-claude-code-rus
 cd learn-claude-code-rus
 pip install -r requirements.txt
 copy .env.example .env   # Windows: скопируйте и укажите ANTHROPIC_API_KEY в .env
