@@ -191,7 +191,7 @@ cd learn-claude-code
 python agents/s09_agent_teams.py
 ```
 
-**Что попробовать в чате с агентом:**
+## Попробуй сам
 
 1. Создать, например, Alice (coder) и Bob (tester), попросить Alice **отправить** Bob сообщение.
 2. **Разослать** всем наподобие: «status update: phase 1 complete».

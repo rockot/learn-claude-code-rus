@@ -132,3 +132,16 @@ Prefer tools over prose."""
 - **Инструмент `todo`** — единственный способ модели обновлять этот список.
 - **Nag reminder** — напоминание обновлять список, если модель долго его не трогает.
 - **Один in_progress** — принудительная последовательная работа по задачам.
+
+---
+
+## Попробуй сам
+
+```sh
+cd learn-claude-code
+python agents/s03_todo_write.py
+```
+
+1. `Сделай рефакторинг hello.py: добавь type hints, docstrings и main guard`
+2. `Создай Python-пакет с __init__.py, utils.py и tests/test_utils.py`
+3. `Проверь все Python-файлы и исправь проблемы со стилем`

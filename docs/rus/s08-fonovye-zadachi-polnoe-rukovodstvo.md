@@ -83,11 +83,12 @@
 
 ---
 
-## Как потрогать руками
+## Попробуй сам
 
 Из корня репозитория (с настроенным `.env`: ключ API и `MODEL_ID`):
 
 ```bash
+cd learn-claude-code
 python agents/s08_background_tasks.py
 ```
 
